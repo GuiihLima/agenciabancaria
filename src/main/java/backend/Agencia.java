@@ -10,8 +10,8 @@ public class Agencia implements Validador {
     private String nome;
     private String cidade;
     private String estado;
-    private static Map<Integer, Pessoa> clientes = new HashMap<Integer, Pessoa>();
-    private static Map<Integer, Conta> contas = new HashMap<Integer, Conta>();
+    private Map<Integer, Pessoa> clientes = new HashMap<Integer, Pessoa>();
+    private Map<Integer, Conta> contas = new HashMap<Integer, Conta>();
 
     public Agencia(String nome, String cidade, String estado) {
         this.nome = nome;

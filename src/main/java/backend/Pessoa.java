@@ -9,6 +9,7 @@ public class Pessoa {
     private String endereço;
     private String cidade;
     private String estado;
+    private String gerente;
 
     public Pessoa(String nome, String cpf, Date nascimento, String endereço, String cidade, String estado) {
         this.nome = nome;
@@ -41,5 +42,13 @@ public class Pessoa {
 
     public String getEstado() {
         return this.estado;
+    }
+
+    public void setGerente(String nome) {
+        this.gerente = nome;
+    }
+
+    public String getGerente() {
+        return this.gerente;
     }
 }
