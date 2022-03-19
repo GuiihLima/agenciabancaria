@@ -1,50 +1,61 @@
 package backend;
 
 import backend.exceptions.*;
-import java.util.ArrayList;
+import backend.interfaces.Validador;
+
+import java.util.Vector;
 import java.util.Date;
 
-public abstract class Conta {
+public abstract class Conta implements Validador {
+    protected Agencia agencia;
     protected double saldo;
     protected Date criaçao;
     protected Date ultAcesso;
-    protected ArrayList<Integer> clientes = new ArrayList<Integer>();
+    protected Vector<Integer> clientes = new Vector<Integer>();
 
-    protected Conta(Integer clienteID) {
+    protected Conta(Agencia agencia, Integer clienteID) {
         this.saldo = 0;
         this.criaçao = new Date();
         this.ultAcesso = null;
+        this.agencia = agencia;
         clientes.add(clienteID);
     }
 
-    public void setDeposito(double valor) {
+    protected void setValor(double valor) {
         this.saldo += valor;
     }
 
-    public void saca(double valor) throws ArgumentoIndefinidoException {
-
-        if (this.saldo < valor) {
-            throw new ArgumentoIndefinidoException(
-                    "Saldo de: " + this.saldo + ", é insufiencie para realizar este saque: ");
-        }
-
-        this.saldo -= valor;
+    protected void getValor(double valor) {
+        if (valor > this.saldo)
+            throw new ArgumentoInvalidoException("Saldo insuficiente");
+        else
+            this.saldo -= valor;
     }
 
-    public void transferencia(double valor, Conta destino) throws ArgumentoIndefinidoException {
-        this.saca(valor);
-        destino.deposita(valor);
+    protected void makeTransferencia(Integer contaID, double valor) {
+        if (valor > this.saldo)
+            throw new ArgumentoInvalidoException("Saldo insuficiente");
+
+        boolean transferido = agencia.makeTransferencia(contaID, valor);
+        if (transferido)
+            this.saldo -= valor;
+        else
+            throw new ArgumentoInvalidoException("ID de Conta inválido");
     }
 
-    public double getSaldo() {
+    protected double getSaldo() {
         return this.saldo;
     }
 
-    public void setCliente(Integer clienteID) {
+    protected void setCliente(Integer clienteID) {
         this.clientes.add(clienteID);
     }
 
-    public ArrayList<Integer> getClientes() {
+    protected Vector<Integer> getClientes() {
         return this.clientes;
+    }
+
+    protected void chgUltimoAcesso(Date data){
+        this.ultAcesso = data;
     }
 }

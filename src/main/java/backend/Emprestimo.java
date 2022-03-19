@@ -1,11 +1,7 @@
 package backend;
 
+import backend.interfaces.Tributos;
 
-public class Emprestimo implements Tributavel_Interface {
-
-	@Override
-	public double getValorImposto() {
-		return 42;
-	}
+public class Emprestimo implements Tributos {
 
 }

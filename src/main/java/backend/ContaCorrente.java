@@ -1,27 +1,35 @@
 package backend;
 
-import backend.exceptions.*;
+import java.util.Date;
+import java.util.Vector;
 
 public class ContaCorrente extends Conta {
+	public ContaCorrente(Agencia agencia, Integer clienteID) {
+		super(agencia, clienteID);
+	}
 
-	public ContaCorrente(Integer clienteID) {
-		super(clienteID);
+	public void setValor(double valor) {
+		super.chgUltimoAcesso(new Date());
+		super.setValor(valor);
 	}
 	
-	@Override
-	public void saca(double valor) throws ArgumentoIndefinidoException {
-		double valorASacar = 1.2 * valor ;
-		super.saca(valorASacar);
+	public void getValor(double valor) {
+		super.chgUltimoAcesso(new Date());
+		super.getValor(valor);
 	}
 
-	@Override
-	public void deposita(double valor) {
-        super.saldo += valor;
-    }
-
-	@Override
-	public double getValorImposto() {	
-		return super.saldo * 0.01;
+	public double getSaldo(){
+		super.chgUltimoAcesso(new Date());
+		return super.getSaldo();
 	}
-	
+
+	public void setCliente(Integer clienteID) {
+		super.chgUltimoAcesso(new Date());
+		super.setCliente(clienteID);
+	}
+
+	public Vector<Integer> getClientes() {
+		super.chgUltimoAcesso(new Date());
+		return super.getClientes();
+	}
 }
