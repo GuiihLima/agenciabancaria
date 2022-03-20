@@ -8,16 +8,21 @@ public abstract class Funcionario {
 	private Integer numero;
 	private Date admissao;
 	private Funcionario supervisor;
-	private Vector<Funcionario> dependentes = new Vector<Funcionario>();
+	private Vector<Funcionario> dependentes;
 
 	public Funcionario(String nome, Integer numero, Funcionario supervisor) {
 		this.nome = nome;
 		this.numero = numero;
 		this.supervisor = supervisor;
 		this.admissao = new Date();
+		this.dependentes = new Vector<Funcionario>();
 	}
 
 	// Métodos Set
+
+	public void setSupervisor(Funcionario supervisor) {
+		this.supervisor = supervisor;
+	}
 
 	public void setDependente(Funcionario funcionario) {
 		dependentes.add(funcionario);

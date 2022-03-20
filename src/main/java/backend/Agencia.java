@@ -7,29 +7,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Agencia implements Validador {
-    private String nome;
     private String cidade;
     private String estado;
-    private Map<Integer, Pessoa> clientes = new HashMap<Integer, Pessoa>();
-    private Map<Integer, Conta> contas = new HashMap<Integer, Conta>();
+    private Map<Integer, Pessoa> clientes;
+    private Map<Integer, Conta> contas;
 
-    public Agencia(String nome, String cidade, String estado) {
-        this.nome = nome;
+    public Agencia(String cidade, String estado) {
         this.cidade = cidade;
         this.estado = estado;
+        clientes = new HashMap<Integer, Pessoa>();
+        contas = new HashMap<Integer, Conta>();
     }
 
-    public String getNome() {
-        return this.nome;
-    }
-
-    public String getCidade() {
-        return this.cidade;
-    }
-
-    public String getEstado() {
-        return this.estado;
-    }
+    // Métodos Set
 
     public void setCliente(Integer id, Pessoa cliente) {
         clientes.put(id, cliente);
@@ -54,12 +44,24 @@ public class Agencia implements Validador {
             throw new ClienteInexistenteException("ID de Cliente inválido");
     }
 
+    // Métodos Get
+
+    public String getCidade() {
+        return this.cidade;
+    }
+
+    public String getEstado() {
+        return this.estado;
+    }
+
+    // Métodos Make
+
     public boolean makeTransferencia(Integer contaID, double valor) {
-        if(isConta(contaID, contas)){
+        if (isConta(contaID, contas)) {
             Conta destino = contas.get(contaID);
             destino.setValor(valor);
             return true;
         }
-            return false;
+        return false;
     }
 }

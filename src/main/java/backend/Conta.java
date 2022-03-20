@@ -11,13 +11,14 @@ public abstract class Conta implements Validador {
     protected double saldo;
     protected Date criaçao;
     protected Date ultAcesso;
-    protected Vector<Integer> clientes = new Vector<Integer>();
+    protected Vector<Integer> clientes;
 
     protected Conta(Agencia agencia, Integer clienteID) {
         this.saldo = 0;
         this.criaçao = new Date();
         this.ultAcesso = null;
         this.agencia = agencia;
+        clientes = new Vector<Integer>();
         clientes.add(clienteID);
     }
 

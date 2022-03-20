@@ -1,7 +1,6 @@
 package backend;
 
 import java.util.Map;
-import java.util.Vector;
 
 import backend.interfaces.Validador;
 
@@ -18,10 +17,20 @@ public class Administraçao implements Validador {
         this.senhaAdmin = senhaAdmin;
     }
 
+    // Métodos Manage
+
+    public Agencia manageAgencia(String nome) {
+        return banco.manageAgencia(nome, senhaAdmin);
+    }
+
+    public Funcionario manageFuncionario(Integer numFuncional) {
+        return banco.manageFuncionario(numFuncional, senhaAdmin);
+    }
+
     // Métodos Set
 
-    public void setAgencia(Agencia agencia) {
-        banco.setAgencia(agencia, senhaAdmin);
+    public void setAgencia(String nome, Agencia agencia) {
+        banco.setAgencia(nome, agencia, senhaAdmin);
     }
 
     public void setFuncionario(Integer numFuncional, Funcionario funcionario) {
@@ -34,7 +43,7 @@ public class Administraçao implements Validador {
         return this.senhaAdmin;
     }
 
-    public Vector<Agencia> getAgencias(){
+    public Map<String, Agencia> getAgencias() {
         return banco.getAgencias(senhaAdmin);
     }
 
