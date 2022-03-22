@@ -7,13 +7,13 @@ import java.util.Vector;
 import java.util.Date;
 
 public abstract class Conta implements Validador {
-    protected Agencia agencia;
-    protected double saldo;
-    protected Date criaçao;
-    protected Date ultAcesso;
-    protected Vector<Integer> clientes;
+    private Agencia agencia;
+    private double saldo;
+    private Date criaçao;
+    private Date ultAcesso;
+    private Vector<Integer> clientes;
 
-    protected Conta(Agencia agencia, Integer clienteID) {
+    public Conta(Agencia agencia, Integer clienteID) {
         this.saldo = 0;
         this.criaçao = new Date();
         this.ultAcesso = null;
@@ -22,18 +22,9 @@ public abstract class Conta implements Validador {
         clientes.add(clienteID);
     }
 
-    protected void setValor(double valor) {
-        this.saldo += valor;
-    }
+    // Métodos Make
 
-    protected void getValor(double valor) {
-        if (valor > this.saldo)
-            throw new ArgumentoInvalidoException("Saldo insuficiente");
-        else
-            this.saldo -= valor;
-    }
-
-    protected void makeTransferencia(Integer contaID, double valor) {
+    public void makeTransferencia(Integer contaID, double valor) {
         if (valor > this.saldo)
             throw new ArgumentoInvalidoException("Saldo insuficiente");
 
@@ -44,19 +35,42 @@ public abstract class Conta implements Validador {
             throw new ArgumentoInvalidoException("ID de Conta inválido");
     }
 
-    protected double getSaldo() {
-        return this.saldo;
+    // Métodos Set
+
+    public void setValor(double valor) {
+        this.saldo += valor;
     }
 
-    protected void setCliente(Integer clienteID) {
+    public void setCliente(Integer clienteID) {
         this.clientes.add(clienteID);
     }
 
-    protected Vector<Integer> getClientes() {
+    // Métodos Get
+
+    public void getValor(double valor) {
+        if (valor > this.saldo)
+            throw new ArgumentoInvalidoException("Saldo insuficiente");
+        else
+            this.saldo -= valor;
+    }
+
+    public double getSaldo() {
+        return this.saldo;
+    }
+
+    public Vector<Integer> getClientes() {
         return this.clientes;
     }
 
-    protected void chgUltimoAcesso(Date data){
+    public Date getCriaçao() {
+        return this.criaçao;
+    }
+
+    public Date getUltimoAcesso(){
+        return this.ultAcesso;
+    }
+
+    public void chgUltimoAcesso(Date data) {
         this.ultAcesso = data;
     }
 }

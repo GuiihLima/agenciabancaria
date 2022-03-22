@@ -3,24 +3,18 @@ package backend;
 import java.util.Date;
 import java.util.Vector;
 
-public class ContaCorrente extends Conta {
+import backend.interfaces.Tributos;
+
+public class ContaCorrente extends Conta implements Tributos {
 	public ContaCorrente(Agencia agencia, Integer clienteID) {
 		super(agencia, clienteID);
 	}
 
+	// Métodos Set
+
 	public void setValor(double valor) {
 		super.chgUltimoAcesso(new Date());
 		super.setValor(valor);
-	}
-	
-	public void getValor(double valor) {
-		super.chgUltimoAcesso(new Date());
-		super.getValor(valor);
-	}
-
-	public double getSaldo(){
-		super.chgUltimoAcesso(new Date());
-		return super.getSaldo();
 	}
 
 	public void setCliente(Integer clienteID) {
@@ -28,8 +22,24 @@ public class ContaCorrente extends Conta {
 		super.setCliente(clienteID);
 	}
 
+	// Métodos Get
+
+	public void getValor(double valor) {
+		super.chgUltimoAcesso(new Date());
+		super.getValor(valor);
+	}
+
+	public double getSaldo() {
+		super.chgUltimoAcesso(new Date());
+		return super.getSaldo();
+	}
+
 	public Vector<Integer> getClientes() {
 		super.chgUltimoAcesso(new Date());
 		return super.getClientes();
+	}
+
+	public double getValorTributo() {
+		return 45;
 	}
 }
