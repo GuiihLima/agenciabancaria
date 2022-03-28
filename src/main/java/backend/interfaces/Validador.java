@@ -2,7 +2,6 @@ package backend.interfaces;
 
 import java.util.Map;
 import backend.*;
-import backend.exceptions.AdminException;
 
 public interface Validador {
     default boolean isCliente(Integer clienteID, Map<Integer, Pessoa> clientes) {
@@ -21,14 +20,5 @@ public interface Validador {
                 isconta = true;
         }
         return isconta;
-    }
-
-    default boolean isAdmin(Administraçao admin, String senha) {
-        if (admin.getSenha() == null)
-            throw new AdminException("Admin não possui senha definida");
-        else if (senha.equals(admin.getSenha()))
-            return true;
-        else
-            return false;
     }
 }

@@ -1,13 +1,24 @@
 package backend;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 import backend.interfaces.Tributos;
 
 public class ContaCorrente extends Conta implements Tributos {
+	private Map<Integer, Operaçao> operaçoes;
+
 	public ContaCorrente(Agencia agencia, Integer clienteID) {
 		super(agencia, clienteID);
+		operaçoes = new HashMap<Integer, Operaçao>();
+	}
+
+	// Métodos Make
+
+	public void makeOperacao(Integer operaçaoID, Operaçao operaçao) {
+		operaçoes.put(operaçaoID, operaçao);
 	}
 
 	// Métodos Set

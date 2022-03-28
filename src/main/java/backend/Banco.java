@@ -4,44 +4,52 @@ import java.util.HashMap;
 import java.util.Map;
 
 import backend.exceptions.*;
-import backend.interfaces.Validador;
 
-public class Banco implements Validador {
+public class Banco {
     private String nome;
     private String sede;
-    private Administraçao admin;
+    private String pwd;
+    private Boolean authenticated = false;
     private Map<String, Agencia> agencias;
     private Map<Integer, Funcionario> funcionarios;
 
     public Banco(String nome, String sede) {
+        this.pwd = null;
         this.nome = nome;
         this.sede = sede;
-        this.admin = new Administraçao(this);
         this.agencias = new HashMap<String, Agencia>();
         this.funcionarios = new HashMap<Integer, Funcionario>();
     }
 
-    public Banco(String nome, String sede, String senhaAdmin) {
+    public Banco(String nome, String sede, String password) {
+        this.pwd = password;
         this.nome = nome;
         this.sede = sede;
-        this.admin = new Administraçao(this, senhaAdmin);
         this.agencias = new HashMap<String, Agencia>();
         this.funcionarios = new HashMap<Integer, Funcionario>();
     }
 
     // Autenticação
 
-    private void Auth(String senha) {
-        if (isAdmin(admin, senha))
+    public void Authenticate(String senha, Boolean keepAuth) { // Autentica o usuário
+        if (senha.equals(this.pwd)) {
+            if (keepAuth)
+                this.authenticated = true;
             return;
-        else
+        } else
             throw new ArgumentoInvalidoException("Senha incorreta");
+    }
+
+    public void Deauthenticate() { // Desautentica o usuário
+        this.authenticated = false;
     }
 
     // Manage
 
-    public Agencia manageAgencia(String nome, String senha) {
-        this.Auth(senha);
+    public Agencia manageAgencia(String nome) {
+        if (!this.authenticated)
+            throw new AutenticaçaoInvalidaException("Acesso negado; Usuário não autenticado");
+
         Agencia agencia = agencias.get(nome);
         if (agencia == null)
             throw new ArgumentoInvalidoException("Agencia inexistente ou nome incorreto");
@@ -49,8 +57,10 @@ public class Banco implements Validador {
             return agencia;
     }
 
-    public Funcionario manageFuncionario(Integer numFuncional, String senha) {
-        this.Auth(senha);
+    public Funcionario manageFuncionario(Integer numFuncional) {
+        if (!this.authenticated)
+            throw new AutenticaçaoInvalidaException("Acesso negado; Usuário não autenticado");
+
         Funcionario funcionario = funcionarios.get(numFuncional);
         if (funcionario == null)
             throw new ArgumentoInvalidoException("Funcionario inexistente ou número funcional incorreto");
@@ -61,19 +71,23 @@ public class Banco implements Validador {
     // Métodos Set
 
     public void setSenhaAdmin(String senha) {
-        if (admin.getSenha() != null)
-            throw new AdminException("Admin já possui senha definida");
+        if (this.pwd != null)
+            throw new AutenticaçaoInvalidaException("Já existe senha para autenticação");
         else
-            admin = new Administraçao(this, senha);
+            pwd = senha;
     }
 
     public void setAgencia(String nome, Agencia agencia, String senha) {
-        this.Auth(senha);
+        if (!this.authenticated)
+            throw new AutenticaçaoInvalidaException("Acesso negado; Usuário não autenticado");
+
         agencias.put(nome, agencia);
     }
 
     public void setFuncionario(Integer numFuncional, Funcionario funcionario, String senha) {
-        this.Auth(senha);
+        if (!this.authenticated)
+            throw new AutenticaçaoInvalidaException("Acesso negado; Usuário não autenticado");
+
         funcionarios.put(numFuncional, funcionario);
     }
 
@@ -87,18 +101,17 @@ public class Banco implements Validador {
         return this.sede;
     }
 
-    public Administraçao getAdmin(String senha) {
-        this.Auth(senha);
-        return this.admin;
-    }
-
     public Map<String, Agencia> getAgencias(String senha) {
-        this.Auth(senha);
+        if (!this.authenticated)
+            throw new AutenticaçaoInvalidaException("Acesso negado; Usuário não autenticado");
+
         return this.agencias;
     }
 
     public Map<Integer, Funcionario> getFuncionarios(String senha) {
-        this.Auth(senha);
+        if (!this.authenticated)
+            throw new AutenticaçaoInvalidaException("Acesso negado; Usuário não autenticado");
+
         return this.funcionarios;
     }
 }
