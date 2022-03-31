@@ -85,15 +85,13 @@ public class Agencia implements Validador {
 
     // Métodos Make
 
-    public void makeTransferencia(Integer contaRemetente, Integer contaDestino, double valor)
+    public void makeTransferencia(Conta remetente, Conta destino, double valor)
             throws TransferenciaInvalidaException {
-        if (!isConta(contaRemetente, contas))
-            throw new TransferenciaInvalidaException("ID da conta remetente inválido");
-        else if (!isConta(contaDestino, contas))
-            throw new TransferenciaInvalidaException("ID da conta destino inválido");
+        if (remetente == null)
+            throw new TransferenciaInvalidaException("Remetente inválido");
+        else if (destino == null)
+            throw new TransferenciaInvalidaException("Destinatário inválido");
 
-        Conta remetente = contas.get(contaRemetente);
-        Conta destino = contas.get(contaDestino);
         remetente.getValor(valor);
         destino.setValor(valor);
     }
