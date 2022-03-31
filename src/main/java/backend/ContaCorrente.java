@@ -1,6 +1,5 @@
 package backend;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -15,39 +14,18 @@ public class ContaCorrente extends Conta implements Tributos {
 		operaçoes = new HashMap<Integer, Operaçao>();
 	}
 
-	// Métodos Make
-
-	public void makeOperacao(Integer operaçaoID, Operaçao operaçao) {
-		operaçoes.put(operaçaoID, operaçao);
-	}
-
 	// Métodos Set
 
-	public void setValor(double valor) {
-		super.chgUltimoAcesso(new Date());
-		super.setValor(valor);
-	}
-
-	public void setCliente(Integer clienteID) {
-		super.chgUltimoAcesso(new Date());
-		super.setCliente(clienteID);
+	public void setOperacao(Integer operaçaoID, Operaçao operaçao) {
+		operaçoes.put(operaçaoID, operaçao);
 	}
 
 	// Métodos Get
 
-	public void getValor(double valor) {
-		super.chgUltimoAcesso(new Date());
-		super.getValor(valor);
-	}
-
-	public double getSaldo() {
-		super.chgUltimoAcesso(new Date());
-		return super.getSaldo();
-	}
-
-	public Vector<Integer> getClientes() {
-		super.chgUltimoAcesso(new Date());
-		return super.getClientes();
+	public Vector<Integer> getOperaçoes() {
+		Vector<Integer> operaçoes = new Vector<Integer>();
+		this.operaçoes.forEach((key, value) -> operaçoes.add(key));
+		return operaçoes;
 	}
 
 	public double getValorTributo() {

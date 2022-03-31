@@ -5,6 +5,7 @@ import backend.interfaces.Validador;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 
 public class Agencia implements Validador {
     private String cidade;
@@ -41,7 +42,7 @@ public class Agencia implements Validador {
                             "Tipo de conta inválido; Deve ser 1 para Conta Poupança ou 2 para Conta Corrente");
             }
         } else
-            throw new ClienteInexistenteException("ID de Cliente inválido");
+            throw new ClienteInvalidoException("ID de Cliente inválido");
     }
 
     // Métodos Get
@@ -54,14 +55,46 @@ public class Agencia implements Validador {
         return this.estado;
     }
 
+    public Pessoa getCliente(Integer clienteID) throws ClienteInvalidoException {
+        Pessoa cliente = clientes.get(clienteID);
+        if (cliente == null)
+            throw new ClienteInvalidoException("Cliente inexistente ou ID incorreto");
+        else
+            return cliente;
+    }
+
+    public Vector<Integer> getAllClientes() {
+        Vector<Integer> allClientes = new Vector<Integer>();
+        this.clientes.forEach((key, value) -> allClientes.add(key));
+        return allClientes;
+    }
+
+    public Conta getConta(Integer contaID) throws ContaInvalidaException {
+        Conta conta = contas.get(contaID);
+        if (conta == null)
+            throw new ContaInvalidaException("Conta inexistente ou ID incorreta");
+        else
+            return conta;
+    }
+
+    public Vector<Integer> getAllContas() {
+        Vector<Integer> allContas = new Vector<Integer>();
+        this.contas.forEach((key, value) -> allContas.add(key));
+        return allContas;
+    }
+
     // Métodos Make
 
-    public boolean makeTransferencia(Integer contaID, double valor) {
-        if (isConta(contaID, contas)) {
-            Conta destino = contas.get(contaID);
-            destino.setValor(valor);
-            return true;
-        }
-        return false;
+    public void makeTransferencia(Integer contaRemetente, Integer contaDestino, double valor)
+            throws TransferenciaInvalidaException {
+        if (!isConta(contaRemetente, contas))
+            throw new TransferenciaInvalidaException("ID da conta remetente inválido");
+        else if (!isConta(contaDestino, contas))
+            throw new TransferenciaInvalidaException("ID da conta destino inválido");
+
+        Conta remetente = contas.get(contaRemetente);
+        Conta destino = contas.get(contaDestino);
+        remetente.getValor(valor);
+        destino.setValor(valor);
     }
 }

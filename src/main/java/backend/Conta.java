@@ -7,7 +7,6 @@ import java.util.Vector;
 import java.util.Date;
 
 public abstract class Conta implements Validador {
-    private Agencia agencia;
     private double saldo;
     private Date criaçao;
     private Date ultAcesso;
@@ -17,32 +16,20 @@ public abstract class Conta implements Validador {
         this.saldo = 0;
         this.criaçao = new Date();
         this.ultAcesso = null;
-        this.agencia = agencia;
-        clientes = new Vector<Integer>();
+        this.clientes = new Vector<Integer>();
         clientes.add(clienteID);
-    }
-
-    // Métodos Make
-
-    public void makeTransferencia(Integer contaID, double valor) {
-        if (valor > this.saldo)
-            throw new ArgumentoInvalidoException("Saldo insuficiente");
-
-        boolean transferido = agencia.makeTransferencia(contaID, valor);
-        if (transferido)
-            this.saldo -= valor;
-        else
-            throw new ArgumentoInvalidoException("ID de Conta inválido");
     }
 
     // Métodos Set
 
     public void setValor(double valor) {
         this.saldo += valor;
+        this.chgUltimoAcesso();
     }
 
     public void setCliente(Integer clienteID) {
         this.clientes.add(clienteID);
+        this.chgUltimoAcesso();
     }
 
     // Métodos Get
@@ -52,25 +39,31 @@ public abstract class Conta implements Validador {
             throw new ArgumentoInvalidoException("Saldo insuficiente");
         else
             this.saldo -= valor;
+        this.chgUltimoAcesso();
     }
-
+    
     public double getSaldo() {
+        this.chgUltimoAcesso();
         return this.saldo;
     }
-
+    
     public Vector<Integer> getClientes() {
+        this.chgUltimoAcesso();
         return this.clientes;
     }
-
+    
     public Date getCriaçao() {
+        this.chgUltimoAcesso();
         return this.criaçao;
     }
-
-    public Date getUltimoAcesso(){
-        return this.ultAcesso;
+    
+    public Date getUltimoAcesso() {
+        Date ultimoAcesso = this.ultAcesso;
+        this.chgUltimoAcesso();
+        return ultimoAcesso;
     }
 
-    public void chgUltimoAcesso(Date data) {
-        this.ultAcesso = data;
+    public void chgUltimoAcesso() {
+        this.ultAcesso = new Date();
     }
 }
