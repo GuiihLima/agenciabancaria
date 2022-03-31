@@ -87,10 +87,17 @@ public class Agencia implements Validador {
 
     public void makeTransferencia(Conta remetente, Conta destino, double valor)
             throws TransferenciaInvalidaException {
-        if (remetente == null)
-            throw new TransferenciaInvalidaException("Remetente inválido");
-        else if (destino == null)
-            throw new TransferenciaInvalidaException("Destinatário inválido");
+        boolean isRemetente = false;
+        boolean isDestino = false;
+        for (Map.Entry<Integer, Conta> conta : contas.entrySet()) {
+            if (conta.getValue().equals(remetente))
+                isRemetente = true;
+            else if (conta.getValue().equals(destino))
+                isDestino = true;
+        }
+
+        if (!isRemetente || !isDestino)
+            throw new TransferenciaInvalidaException("Remetente ou Destinatário inválido");
 
         remetente.getValor(valor);
         destino.setValor(valor);
