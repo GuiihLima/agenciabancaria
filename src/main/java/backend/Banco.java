@@ -1,12 +1,13 @@
 package backend;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
 import backend.exceptions.*;
 
-public class Banco {
+public class Banco implements Serializable {
     private String nome;
     private String sede;
     private String pwd;

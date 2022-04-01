@@ -17,6 +17,7 @@ public class ContaCorrente extends Conta implements Tributos {
 	// Métodos Set
 
 	public void setOperacao(Integer operaçaoID, Operaçao operaçao) {
+		super.getValor(operaçao.getValor());
 		operaçoes.put(operaçaoID, operaçao);
 	}
 
