@@ -1,5 +1,7 @@
 package backend;
 
-public class Emprestimo {
+import java.io.Serializable;
+
+public class Emprestimo implements Serializable {
 
 }

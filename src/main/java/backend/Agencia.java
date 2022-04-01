@@ -3,21 +3,24 @@ package backend;
 import backend.exceptions.*;
 import backend.interfaces.Validador;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-public class Agencia implements Validador {
+public class Agencia implements Validador, Serializable {
     private String cidade;
     private String estado;
     private Map<Integer, Pessoa> clientes;
     private Map<Integer, Conta> contas;
+    private Map<Integer, Funcionario> funcionarios;
 
     public Agencia(String cidade, String estado) {
         this.cidade = cidade;
         this.estado = estado;
-        clientes = new HashMap<Integer, Pessoa>();
-        contas = new HashMap<Integer, Conta>();
+        this.clientes = new HashMap<Integer, Pessoa>();
+        this.contas = new HashMap<Integer, Conta>();
+        this.funcionarios = new HashMap<Integer, Funcionario>();
     }
 
     // Métodos Set
@@ -26,7 +29,7 @@ public class Agencia implements Validador {
         clientes.put(id, cliente);
     }
 
-    public void setConta(Integer clienteID, Integer contaID, int contaType) {
+    public void setConta(Integer contaID, Integer clienteID, Integer contaType) {
         if (isCliente(clienteID, clientes)) {
             switch (contaType) {
                 case 1:
@@ -43,6 +46,10 @@ public class Agencia implements Validador {
             }
         } else
             throw new ClienteInvalidoException("ID de Cliente inválido");
+    }
+
+    public void setFuncionario(Integer numFuncional, Funcionario funcionario) {
+        funcionarios.put(numFuncional, funcionario);
     }
 
     // Métodos Get
@@ -81,6 +88,21 @@ public class Agencia implements Validador {
         Vector<Integer> allContas = new Vector<Integer>();
         this.contas.forEach((key, value) -> allContas.add(key));
         return allContas;
+    }
+
+    public Funcionario getFuncionario(Integer numFuncional) {
+        Funcionario funcionario = funcionarios.get(numFuncional);
+        if (funcionario == null)
+            throw new ArgumentoInvalidoException("Funcionario inexistente ou número funcional incorreto");
+        else
+            return funcionario;
+    }
+
+    public Vector<Integer> getAllFuncionarios() {
+        Vector<Integer> allFuncionarios = new Vector<Integer>();
+        this.funcionarios.forEach((key, value) -> allFuncionarios.add(key));
+
+        return allFuncionarios;
     }
 
     // Métodos Make

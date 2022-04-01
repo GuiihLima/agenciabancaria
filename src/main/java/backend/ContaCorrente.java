@@ -1,12 +1,13 @@
 package backend;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
 import backend.interfaces.Tributos;
 
-public class ContaCorrente extends Conta implements Tributos {
+public class ContaCorrente extends Conta implements Tributos, Serializable {
 	private Map<Integer, Operaçao> operaçoes;
 
 	public ContaCorrente(Agencia agencia, Integer clienteID) {

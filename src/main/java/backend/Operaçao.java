@@ -1,8 +1,9 @@
 package backend;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Operaçao {
+public class Operaçao implements Serializable {
     private String tipo;
     private String descriçao;
     private double valor;

@@ -13,14 +13,12 @@ public class Banco implements Serializable {
     private String pwd;
     private Boolean authenticated = false;
     private Map<String, Agencia> agencias;
-    private Map<Integer, Funcionario> funcionarios;
 
     public Banco(String nome, String sede) {
         this.pwd = null;
         this.nome = nome;
         this.sede = sede;
         this.agencias = new HashMap<String, Agencia>();
-        this.funcionarios = new HashMap<Integer, Funcionario>();
     }
 
     public Banco(String nome, String sede, String password) {
@@ -28,7 +26,6 @@ public class Banco implements Serializable {
         this.nome = nome;
         this.sede = sede;
         this.agencias = new HashMap<String, Agencia>();
-        this.funcionarios = new HashMap<Integer, Funcionario>();
     }
 
     // Autenticação
@@ -60,13 +57,6 @@ public class Banco implements Serializable {
         agencias.put(nome, agencia);
     }
 
-    public void setFuncionario(Integer numFuncional, Funcionario funcionario) {
-        if (!this.authenticated)
-            throw new AutenticaçaoInvalidaException("Acesso negado; Usuário não autenticado");
-
-        funcionarios.put(numFuncional, funcionario);
-    }
-
     // Métodos Get
 
     public String getNome() {
@@ -96,26 +86,5 @@ public class Banco implements Serializable {
         this.agencias.forEach((key, value) -> allAgencias.add(key));
 
         return allAgencias;
-    }
-
-    public Funcionario getFuncionario(Integer numFuncional) {
-        if (!this.authenticated)
-            throw new AutenticaçaoInvalidaException("Acesso negado; Usuário não autenticado");
-
-        Funcionario funcionario = funcionarios.get(numFuncional);
-        if (funcionario == null)
-            throw new ArgumentoInvalidoException("Funcionario inexistente ou número funcional incorreto");
-        else
-            return funcionario;
-    }
-
-    public Vector<Integer> getAllFuncionarios() {
-        if (!this.authenticated)
-            throw new AutenticaçaoInvalidaException("Acesso negado; Usuário não autenticado");
-
-        Vector<Integer> allFuncionarios = new Vector<Integer>();
-        this.funcionarios.forEach((key, value) -> allFuncionarios.add(key));
-
-        return allFuncionarios;
     }
 }

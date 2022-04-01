@@ -4,9 +4,10 @@ import backend.exceptions.*;
 import backend.interfaces.Validador;
 
 import java.util.Vector;
+import java.io.Serializable;
 import java.util.Date;
 
-public abstract class Conta implements Validador {
+public abstract class Conta implements Validador, Serializable {
     private double saldo;
     private Date criaçao;
     private Date ultAcesso;

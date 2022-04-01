@@ -1,19 +1,19 @@
 package backend;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Vector;
 
-public abstract class Funcionario {
+public class Funcionario implements Serializable {
 	private String nome;
 	private Integer numero;
 	private Date admissao;
 	private Funcionario supervisor;
 	private Vector<Funcionario> dependentes;
 
-	public Funcionario(String nome, Integer numero, Funcionario supervisor) {
+	public Funcionario(String nome, Integer numero) {
 		this.nome = nome;
 		this.numero = numero;
-		this.supervisor = supervisor;
 		this.admissao = new Date();
 		this.dependentes = new Vector<Funcionario>();
 	}
