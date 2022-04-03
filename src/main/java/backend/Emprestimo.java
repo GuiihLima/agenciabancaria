@@ -8,26 +8,32 @@ import java.util.Vector;
 import backend.exceptions.IDInvalidoException;
 
 public class Emprestimo implements Serializable {
-    private Double valor;
+    private Double valorTotal;
+    private Double valorParcela;
     private Integer parcelas;
     private Map<Integer, Cliente> clientes;
 
     public Emprestimo(Double valor, Integer parcelas) {
-        this.valor = valor;
+        this.valorTotal = valor;
         this.parcelas = parcelas;
+        this.valorParcela = valor / parcelas;
         this.clientes = new HashMap<Integer, Cliente>();
     }
 
     // Métodos Set
 
     public void setCliente(Integer id, Cliente cliente) {
-         clientes.put(id, cliente);
+        clientes.put(id, cliente);
     }
 
     // Métodos Get
 
-    public Double getValor() {
-        return this.valor;
+    public Double getValorTotal() {
+        return this.valorTotal;
+    }
+
+    public Double getValorRestante() {
+        return this.valorParcela * this.parcelas;
     }
 
     public Integer getParcelas() {
@@ -46,5 +52,16 @@ public class Emprestimo implements Serializable {
         Vector<Integer> allClientes = new Vector<Integer>();
         this.clientes.forEach((key, value) -> allClientes.add(key));
         return allClientes;
+    }
+
+    // Método Pay
+
+    public Boolean payParcela(Conta conta) {
+        if (parcelas == 0)
+            return false;
+
+        conta.getValor(this.valorParcela);
+        this.parcelas--;
+        return true;
     }
 }
