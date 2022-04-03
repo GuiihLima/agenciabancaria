@@ -11,16 +11,18 @@ import java.util.Vector;
 public class Agencia implements Validador, Serializable {
     private String cidade;
     private String estado;
-    private Map<Integer, Pessoa> clientes;
     private Map<Integer, Conta> contas;
+    private Map<Integer, Pessoa> clientes;
+    private Map<Integer, Emprestimo> emprestimos;
     private Map<Integer, Funcionario> funcionarios;
 
     public Agencia(String cidade, String estado) {
         this.cidade = cidade;
         this.estado = estado;
-        this.clientes = new HashMap<Integer, Pessoa>();
-        this.contas = new HashMap<Integer, Conta>();
-        this.funcionarios = new HashMap<Integer, Funcionario>();
+        this.contas = new HashMap<>();
+        this.clientes = new HashMap<>();
+        this.emprestimos = new HashMap<>();
+        this.funcionarios = new HashMap<>();
     }
 
     // Métodos Set
@@ -45,11 +47,15 @@ public class Agencia implements Validador, Serializable {
                             "Tipo de conta inválido; Deve ser 1 para Conta Poupança ou 2 para Conta Corrente");
             }
         } else
-            throw new ClienteInvalidoException("ID de Cliente inválido");
+            throw new IDInvalidoException("ID de Cliente inválido");
     }
 
     public void setFuncionario(Integer numFuncional, Funcionario funcionario) {
         funcionarios.put(numFuncional, funcionario);
+    }
+
+    public void setEmprestimo(Integer id, Emprestimo emprestimo) {
+        this.emprestimos.put(id, emprestimo);
     }
 
     // Métodos Get
@@ -62,10 +68,10 @@ public class Agencia implements Validador, Serializable {
         return this.estado;
     }
 
-    public Pessoa getCliente(Integer clienteID) throws ClienteInvalidoException {
+    public Pessoa getCliente(Integer clienteID) throws IDInvalidoException {
         Pessoa cliente = clientes.get(clienteID);
         if (cliente == null)
-            throw new ClienteInvalidoException("Cliente inexistente ou ID incorreto");
+            throw new IDInvalidoException("Cliente inexistente ou ID incorreto");
         else
             return cliente;
     }
