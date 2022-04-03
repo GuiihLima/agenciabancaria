@@ -9,7 +9,7 @@ public class Teste {
         Agencia agc = new Agencia("Uberlândia", "MG");
         bbank.authenticate("admin");
         bbank.setAgencia("Udia", agc);
-        ObjCreator.criaCliente(agc, "Guilherme", "0123", new Date(), "endereço", "cidade", "estado");
+        ObjCreator.criaCliente(agc, "Guilherme", "0123", new Date(), "endereço", "cidade", "estado", "alo123");
 
         try {
 
@@ -28,7 +28,7 @@ public class Teste {
             System.out.println(banco.getNome());
             Agencia agencia = banco.getAgencia("Udia");
             System.out.println(banco.getAllAgencias());
-            Pessoa cliente = agencia.getCliente(1);
+            Cliente cliente = agencia.getCliente(1);
             System.out.println(cliente.getNome());
 
         } catch (ClassNotFoundException e) {

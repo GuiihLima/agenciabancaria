@@ -12,7 +12,7 @@ public class Agencia implements Validador, Serializable {
     private String cidade;
     private String estado;
     private Map<Integer, Conta> contas;
-    private Map<Integer, Pessoa> clientes;
+    private Map<Integer, Cliente> clientes;
     private Map<Integer, Emprestimo> emprestimos;
     private Map<Integer, Funcionario> funcionarios;
 
@@ -27,7 +27,7 @@ public class Agencia implements Validador, Serializable {
 
     // Métodos Set
 
-    public void setCliente(Integer id, Pessoa cliente) {
+    public void setCliente(Integer id, Cliente cliente) {
         clientes.put(id, cliente);
     }
 
@@ -68,8 +68,8 @@ public class Agencia implements Validador, Serializable {
         return this.estado;
     }
 
-    public Pessoa getCliente(Integer clienteID) throws IDInvalidoException {
-        Pessoa cliente = clientes.get(clienteID);
+    public Cliente getCliente(Integer clienteID) throws IDInvalidoException {
+        Cliente cliente = clientes.get(clienteID);
         if (cliente == null)
             throw new IDInvalidoException("Cliente inexistente ou ID incorreto");
         else

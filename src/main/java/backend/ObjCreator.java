@@ -3,75 +3,82 @@ package backend;
 import java.util.Date;
 
 public class ObjCreator {
-    private static Integer cuponsID = 0;
-    private static Integer contasID = 0;
-    private static Integer clientesID = 0;
-    private static Integer operaçoesID = 0;
-    private static Integer emprestimosID = 0;
-    private static Integer funcionariosID = 0;
-
-    public static boolean criaCliente(Agencia agencia, String nome, String cpf, Date nascimento, String endereço,
-            String cidade, String estado) {
-        boolean state = true;
-        try {
-            Pessoa cliente = new Pessoa(nome, cpf, nascimento, endereço, cidade, estado);
-            agencia.setCliente(++clientesID, cliente);
-        } catch (Exception e) {
-            state = false;
-        }
-        return state;
+    private static Integer idCreator() throws InterruptedException {
+        Date time = new Date();
+        Integer id = Math.abs(time.hashCode());
+        Thread.sleep(10);
+        return id;
     }
 
-    public static boolean criaFuncionario(Agencia agencia, String nome, Integer numero) {
-        boolean state = true;
-        try {
-            Funcionario funcionario = new Funcionario(nome, numero);
-            agencia.setFuncionario(++funcionariosID, funcionario);
+    public static Integer criaCliente(Agencia agencia, String nome, String cpf, Date nascimento, String endereço,
+            String cidade, String estado, String senha) {
+                Integer id;
+                try {
+            id = idCreator();
+            Cliente cliente = new Cliente(nome, cpf, nascimento, endereço, cidade, estado, senha);
+            agencia.setCliente(id, cliente);
         } catch (Exception e) {
-            state = false;
+            id = null;
         }
-        return state;
+        return id;
     }
 
-    public static boolean criaConta(Agencia agencia, Integer clienteID, Integer tipoDeConta) {
-        boolean state = true;
+    public static Integer criaFuncionario(Agencia agencia, String nome, Integer numero, String senha) {
+        Integer id;
         try {
-            agencia.setConta(++contasID, clienteID, tipoDeConta);
+            id = idCreator();
+            Funcionario funcionario = new Funcionario(nome, numero, senha);
+            agencia.setFuncionario(id, funcionario);
         } catch (Exception e) {
-            state = false;
+            id = null;
         }
-        return state;
+        return id;
     }
 
-    public static boolean criaOperaçao(ContaCorrente conta, String tipo, String descrição, Double valor, Date data) {
-        boolean state = true;
+    public static Integer criaConta(Agencia agencia, Integer clienteID, Integer tipoDeConta) {
+        Integer id;
         try {
+            id = idCreator();
+            agencia.setConta(id, clienteID, tipoDeConta);
+        } catch (Exception e) {
+            id = null;
+        }
+        return id;
+    }
+
+    public static Integer criaOperaçao(ContaCorrente conta, String tipo, String descrição, Double valor, Date data) {
+        Integer id;
+        try {
+            id = idCreator();
             Operaçao operaçao = new Operaçao(tipo, descrição, valor, data);
             conta.getValor(valor);
-            conta.setOperacao(++operaçoesID, operaçao);
+            conta.setOperacao(id, operaçao);
+            Thread.sleep(10);
             if (valor > 5000) {
                 Date validade = new Date();
+                Integer idCupom = idCreator();
                 validade.setMonth(validade.getMonth() + 1);
-                conta.setCupom(++cuponsID, validade);
+                conta.setCupom(idCupom, validade);
             }
         } catch (Exception e) {
-            state = false;
+            id = null;
         }
-        return state;
+        return id;
     }
 
-    public static boolean criaEmprestimo(Agencia agencia, Integer[] clientesID, Double valor, Integer parcelas) {
-        boolean state = true;
+    public static Integer criaEmprestimo(Agencia agencia, Integer[] clientesID, Double valor, Integer parcelas) {
+        Integer id;
         try {
+            id = idCreator();
             Emprestimo emprestimo = new Emprestimo(valor, parcelas);
-            agencia.setEmprestimo(++emprestimosID, emprestimo);
+            agencia.setEmprestimo(id, emprestimo);
             for (int i = 0; i < clientesID.length; i++) {
-                Pessoa cliente = agencia.getCliente(clientesID[i]);
+                Cliente cliente = agencia.getCliente(clientesID[i]);
                 emprestimo.setCliente(clientesID[i], cliente);
             }
         } catch (Exception e) {
-            state = false;
+            id = null;
         }
-        return state;
+        return id;
     }
 }

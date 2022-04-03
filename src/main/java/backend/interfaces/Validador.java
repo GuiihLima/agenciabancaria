@@ -4,9 +4,9 @@ import java.util.Map;
 import backend.*;
 
 public interface Validador {
-    default boolean isCliente(Integer clienteID, Map<Integer, Pessoa> clientes) {
+    default boolean isCliente(Integer clienteID, Map<Integer, Cliente> clientes) {
         boolean iscliente = false;
-        for (Map.Entry<Integer, Pessoa> cliente : clientes.entrySet()) {
+        for (Map.Entry<Integer, Cliente> cliente : clientes.entrySet()) {
             if (cliente.getKey() == clienteID)
                 iscliente = true;
         }

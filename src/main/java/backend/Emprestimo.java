@@ -10,17 +10,17 @@ import backend.exceptions.IDInvalidoException;
 public class Emprestimo implements Serializable {
     private Double valor;
     private Integer parcelas;
-    private Map<Integer, Pessoa> clientes;
+    private Map<Integer, Cliente> clientes;
 
     public Emprestimo(Double valor, Integer parcelas) {
         this.valor = valor;
         this.parcelas = parcelas;
-        this.clientes = new HashMap<Integer, Pessoa>();
+        this.clientes = new HashMap<Integer, Cliente>();
     }
 
     // Métodos Set
 
-    public void setCliente(Integer id, Pessoa cliente) {
+    public void setCliente(Integer id, Cliente cliente) {
          clientes.put(id, cliente);
     }
 
@@ -34,8 +34,8 @@ public class Emprestimo implements Serializable {
         return this.parcelas;
     }
 
-    public Pessoa getCliente(Integer clienteID) {
-        Pessoa cliente = clientes.get(clienteID);
+    public Cliente getCliente(Integer clienteID) {
+        Cliente cliente = clientes.get(clienteID);
         if (cliente == null)
             throw new IDInvalidoException("Cliente inexistente ou ID incorreto");
         else

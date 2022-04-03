@@ -10,19 +10,19 @@ import backend.exceptions.*;
 public class Banco implements Serializable {
     private String nome;
     private String sede;
-    private String pwd;
+    private String senha;
     private Boolean authenticated = false;
     private Map<String, Agencia> agencias;
 
     public Banco(String nome, String sede) {
-        this.pwd = null;
+        this.senha = null;
         this.nome = nome;
         this.sede = sede;
         this.agencias = new HashMap<String, Agencia>();
     }
 
     public Banco(String nome, String sede, String password) {
-        this.pwd = password;
+        this.senha = password;
         this.nome = nome;
         this.sede = sede;
         this.agencias = new HashMap<String, Agencia>();
@@ -31,7 +31,7 @@ public class Banco implements Serializable {
     // Autenticação
 
     public void authenticate(String senha) { // Autentica o usuário
-        if (senha.equals(this.pwd))
+        if (senha.equals(this.senha))
             this.authenticated = true;
         else
             throw new ArgumentoInvalidoException("Senha incorreta");
@@ -44,10 +44,10 @@ public class Banco implements Serializable {
     // Métodos Set
 
     public void setSenhaAdmin(String senha) {
-        if (this.pwd != null)
+        if (this.senha != null)
             throw new AutenticaçaoInvalidaException("Já existe senha para autenticação");
         else
-            pwd = senha;
+            this.senha = senha;
     }
 
     public void setAgencia(String nome, Agencia agencia) {
