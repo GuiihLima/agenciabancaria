@@ -3,13 +3,13 @@ package backend;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Operaçao implements Serializable {
+public class Operacao implements Serializable {
     private String tipo;
     private String descriçao;
     private double valor;
     private Date data;
 
-    public Operaçao(String tipo, String descriçao, double valor, Date data) {
+    public Operacao(String tipo, String descriçao, double valor, Date data) {
         this.tipo = tipo;
         this.descriçao = descriçao;
         this.valor = valor;

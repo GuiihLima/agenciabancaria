@@ -50,7 +50,7 @@ public class ObjCreator {
         Integer id;
         try {
             id = idCreator();
-            Operaçao operaçao = new Operaçao(tipo, descrição, valor, data);
+            Operacao operaçao = new Operacao(tipo, descrição, valor, data);
             conta.getValor(valor);
             conta.setOperacao(id, operaçao);
             Thread.sleep(10);

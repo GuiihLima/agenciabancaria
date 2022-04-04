@@ -10,7 +10,7 @@ import backend.interfaces.Tributos;
 public class ContaCorrente extends Conta implements Tributos {
 	private Date vencimentoTarifa;
 	private Map<Integer, Date> cupons;
-	private Map<Integer, Operaçao> operaçoes;
+	private Map<Integer, Operacao> operaçoes;
 
 	public ContaCorrente(Agencia agencia, Integer clienteID) {
 		super(agencia, clienteID);
@@ -21,7 +21,7 @@ public class ContaCorrente extends Conta implements Tributos {
 
 	// Métodos Set
 
-	public void setOperacao(Integer operaçaoID, Operaçao operaçao) {
+	public void setOperacao(Integer operaçaoID, Operacao operaçao) {
 		super.getValor(operaçao.getValor());
 		operaçoes.put(operaçaoID, operaçao);
 	}
