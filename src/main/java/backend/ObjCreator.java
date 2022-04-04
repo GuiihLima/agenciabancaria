@@ -23,11 +23,11 @@ public class ObjCreator {
         return id;
     }
 
-    public static Integer criaFuncionario(Agencia agencia, String nome, Integer numero, String senha) {
+    public static Integer criaFuncionario(Agencia agencia, String nome, Integer numero, Integer funçao, String senha) {
         Integer id;
         try {
             id = idCreator();
-            Funcionario funcionario = new Funcionario(nome, numero, senha);
+            Funcionario funcionario = new Funcionario(nome, numero, funçao, senha);
             agencia.setFuncionario(id, funcionario);
         } catch (Exception e) {
             id = null;

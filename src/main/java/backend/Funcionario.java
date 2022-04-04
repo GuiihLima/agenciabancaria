@@ -10,15 +10,17 @@ import backend.exceptions.AutenticaçaoInvalidaException;
 public class Funcionario implements Serializable {
 	private String nome;
 	private Integer numero;
+	private Integer funçao;
 	private Date admissao;
 	private Funcionario supervisor;
 	private Vector<String> dependentes;
 	private String senha;
 	private Boolean authenticated = false;
 
-	public Funcionario(String nome, Integer numero, String senha) {
+	public Funcionario(String nome, Integer numero, Integer funçao, String senha) {
 		this.nome = nome;
 		this.numero = numero;
+		this.funçao = funçao;
 		this.admissao = new Date();
 		this.dependentes = new Vector<>();
 		this.senha = senha;
@@ -63,6 +65,10 @@ public class Funcionario implements Serializable {
 		if (!this.authenticated)
 			throw new AutenticaçaoInvalidaException("Acesso negado; Funcionário não autenticado");
 		return this.numero;
+	}
+
+	public Integer getFunçao() {
+		return this.funçao;
 	}
 
 	public Date getAdmissao() {

@@ -6,19 +6,15 @@ import backend.*;
 public interface Validador {
     default boolean isCliente(Integer clienteID, Map<Integer, Cliente> clientes) {
         boolean iscliente = false;
-        for (Map.Entry<Integer, Cliente> cliente : clientes.entrySet()) {
-            if (cliente.getKey() == clienteID)
-                iscliente = true;
-        }
+        if (clientes.containsKey(clienteID))
+            iscliente = true;
         return iscliente;
     }
 
     default boolean isConta(Integer contaID, Map<Integer, Conta> contas) {
         boolean isconta = false;
-        for (Map.Entry<Integer, Conta> conta : contas.entrySet()) {
-            if (conta.getKey() == contaID)
-                isconta = true;
-        }
+        if (contas.containsKey(contaID))
+            isconta = true;
         return isconta;
     }
 }
